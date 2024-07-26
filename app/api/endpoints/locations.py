@@ -5,16 +5,17 @@ from app.models.location import Location
 
 router = APIRouter()
 
-@router.get("/company/{company_id}", response_model=List[Location])
+@router.get("/all", response_model=List[Location])
+def read_all_locations():
+    locations = get_all_locations()
+    if not locations:
+        raise HTTPException(status_code=404, detail="No locations found")
+    return locations
+
+@router.get("/{company_id}", response_model=List[Location])
 def read_locations(company_id: int):
     locations = get_locations_by_company_id(company_id)
     if not locations:
         raise HTTPException(status_code=404, detail="No locations found for this company")
     return locations
 
-@router.get("/", response_model=List[Location])
-def read_all_locations():
-    locations = get_all_locations()
-    if not locations:
-        raise HTTPException(status_code=404, detail="No locations found")
-    return locations
