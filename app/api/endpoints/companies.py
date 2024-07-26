@@ -7,7 +7,10 @@ router = APIRouter()
 
 @router.get("/", response_model=List[Company])
 def read_companies():
-    return get_all_companies()
+    companies = get_all_companies()
+    if not companies:
+        raise HTTPException(status_code=404, detail="No companies found")
+    return companies
 
 @router.get("/{company_id}", response_model=Company)
 def read_company(company_id: int):

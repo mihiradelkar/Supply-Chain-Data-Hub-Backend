@@ -10,3 +10,7 @@ def get_locations_by_company_id(company_id: int):
     if locations.empty:
         return []
     return locations.to_dict(orient='records')
+
+def get_all_locations():
+    df = load_locations()
+    return df.to_dict(orient='records')
