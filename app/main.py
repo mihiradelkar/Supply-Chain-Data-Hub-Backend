@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.endpoints import companies, locations
+from app.api.endpoints import companies, locations, statistics
 from app.core.logging import setup_logging
 
 app = FastAPI()
@@ -20,6 +20,7 @@ app.add_middleware(
 # Include endpoints
 app.include_router(companies.router, prefix="/api/companies", tags=["companies"])
 app.include_router(locations.router, prefix="/api/locations", tags=["locations"])
+app.include_router(statistics.router, prefix="/api/statistics", tags=["locations"])
 
 @app.get("/")
 def read_root():
